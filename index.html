@@ -64,7 +64,7 @@
 
         // X軸
         const xGeometry = new THREE.BufferGeometry().setFromPoints([
-          new THREE.Vector3(-1, 0, 0),
+          new THREE.Vector3(0, 0, 0),
           new THREE.Vector3(1, 0, 0)
         ]);
         const xAxis = new THREE.Line(xGeometry, axisMaterial);
@@ -72,7 +72,7 @@
 
         // Y軸
         const yGeometry = new THREE.BufferGeometry().setFromPoints([
-          new THREE.Vector3(0, -1, 0),
+          new THREE.Vector3(0, 0, 0),
           new THREE.Vector3(0, 1, 0)
         ]);
         const yAxis = new THREE.Line(yGeometry, axisMaterial);
@@ -80,7 +80,7 @@
 
         // Z軸
         const zGeometry = new THREE.BufferGeometry().setFromPoints([
-          new THREE.Vector3(0, 0, -1),
+          new THREE.Vector3(0, 0, 0),
           new THREE.Vector3(0, 0, 1)
         ]);
         const zAxis = new THREE.Line(zGeometry, axisMaterial);
@@ -117,15 +117,19 @@
         const normalizedData = normalizeData(data);
 
         const scatterGroup = new THREE.Group();
-        scatterGroup.position.set(0, 1, 0);
+        scatterGroup.position.set(0, 0, 0);
 
         normalizedData.forEach(point => {
           const geometry = new THREE.SphereGeometry(0.03, 16, 16);
-          const material = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+          const material = new THREE.MeshBasicMaterial({
+            color: 0x0000ff,
+            transparent: true,    // 半透明を有効にする
+            opacity: 0.5          // 透明度を50%に設定 
+          });
           const sphere = new THREE.Mesh(geometry, material);
 
           sphere.position.set(point.x, point.y, point.z);
-          sphere.scale.set(point.size * 1, point.size * 1, point.size * 1);
+          sphere.scale.set(point.size * 2, point.size * 2, point.size * 2);
 
           scatterGroup.add(sphere);
         });
